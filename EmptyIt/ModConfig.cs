@@ -6,11 +6,17 @@
         public bool ConfigUpdated { get; set; }
         public int Interval { get; set; } = 1;
         public bool EmptyLandfillSites { get; set; } = true;
-        public int ThresholdLandfillSites { get; set; } = 75;
+        public int UpperThresholdLandfillSites { get; set; } = 75;
+        public bool StopEmptyingLandfillSites { get; set; } = true;
+        public int LowerThresholdLandfillSites { get; set; } = 25;
         public bool EmptyCemeteries { get; set; } = true;
-        public int ThresholdCemeteries { get; set; } = 75;
+        public int UpperThresholdCemeteries { get; set; } = 75;
+        public bool StopEmptyingCemeteries { get; set; } = true;
+        public int LowerThresholdCemeteries { get; set; } = 25;
         public bool EmptySnowDumps { get; set; } = true;
-        public int ThresholdSnowDumps { get; set; } = 75;
+        public int UpperThresholdSnowDumps { get; set; } = 75;
+        public bool StopEmptyingSnowDumps { get; set; } = true;
+        public int LowerThresholdSnowDumps { get; set; } = 25;
 
         private static ModConfig instance;
 

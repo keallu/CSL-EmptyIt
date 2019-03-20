@@ -8,7 +8,7 @@ namespace EmptyIt
 {
     public static class EmptyUtils
     {
-        public static void EmptyBuildings(List<ushort> list)
+        public static void EmptyBuildings(List<ushort> list, bool emptying)
         {
             try
             {
@@ -16,7 +16,7 @@ namespace EmptyIt
 
                 foreach (ushort buildingId in list)
                 {
-                    simulationManager.AddAction(EmptyBuilding(buildingId));
+                    simulationManager.AddAction(EmptyBuilding(buildingId, emptying));
                 }
             }
             catch (Exception e)
@@ -25,12 +25,12 @@ namespace EmptyIt
             }
         }
 
-        private static IEnumerator EmptyBuilding(ushort buildingId)
+        private static IEnumerator EmptyBuilding(ushort buildingId, bool emptying)
         {
             try
             {
                 BuildingManager buildingManager = Singleton<BuildingManager>.instance;
-                buildingManager.m_buildings.m_buffer[buildingId].Info.m_buildingAI.SetEmptying(buildingId, ref buildingManager.m_buildings.m_buffer[buildingId], true);
+                buildingManager.m_buildings.m_buffer[buildingId].Info.m_buildingAI.SetEmptying(buildingId, ref buildingManager.m_buildings.m_buffer[buildingId], emptying);
             }
             catch (Exception e)
             {

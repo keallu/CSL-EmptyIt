@@ -54,11 +54,26 @@ namespace EmptyIt
                 ModConfig.Instance.Save();
             });
 
-            selectedValue = ModConfig.Instance.ThresholdLandfillSites;
-            group.AddTextfield("Threshold (percentage)", selectedValue.ToString(), sel =>
+            selectedValue = ModConfig.Instance.UpperThresholdLandfillSites;
+            group.AddTextfield("Upper Threshold (percentage)", selectedValue.ToString(), sel =>
             {
                 int.TryParse(sel, out result);
-                ModConfig.Instance.ThresholdLandfillSites = result;
+                ModConfig.Instance.UpperThresholdLandfillSites = result;
+                ModConfig.Instance.Save();
+            });
+
+            selected = ModConfig.Instance.StopEmptyingLandfillSites;
+            group.AddCheckbox("Stop Emptying Landfill Sites", selected, sel =>
+            {
+                ModConfig.Instance.StopEmptyingLandfillSites = sel;
+                ModConfig.Instance.Save();
+            });
+
+            selectedValue = ModConfig.Instance.LowerThresholdLandfillSites;
+            group.AddTextfield("Lower Threshold (percentage)", selectedValue.ToString(), sel =>
+            {
+                int.TryParse(sel, out result);
+                ModConfig.Instance.LowerThresholdLandfillSites = result;
                 ModConfig.Instance.Save();
             });
 
@@ -71,11 +86,26 @@ namespace EmptyIt
                 ModConfig.Instance.Save();
             });
 
-            selectedValue = ModConfig.Instance.ThresholdCemeteries;
-            group.AddTextfield("Threshold (percentage)", selectedValue.ToString(), sel =>
+            selectedValue = ModConfig.Instance.UpperThresholdCemeteries;
+            group.AddTextfield("Upper Threshold (percentage)", selectedValue.ToString(), sel =>
             {
                 int.TryParse(sel, out result);
-                ModConfig.Instance.ThresholdCemeteries = result;
+                ModConfig.Instance.UpperThresholdCemeteries = result;
+                ModConfig.Instance.Save();
+            });
+
+            selected = ModConfig.Instance.StopEmptyingCemeteries;
+            group.AddCheckbox("Stop Emptying Cemeteries", selected, sel =>
+            {
+                ModConfig.Instance.StopEmptyingCemeteries = sel;
+                ModConfig.Instance.Save();
+            });
+
+            selectedValue = ModConfig.Instance.LowerThresholdCemeteries;
+            group.AddTextfield("Lower Threshold (percentage)", selectedValue.ToString(), sel =>
+            {
+                int.TryParse(sel, out result);
+                ModConfig.Instance.LowerThresholdCemeteries = result;
                 ModConfig.Instance.Save();
             });
 
@@ -88,11 +118,26 @@ namespace EmptyIt
                 ModConfig.Instance.Save();
             });
 
-            selectedValue = ModConfig.Instance.ThresholdSnowDumps;
-            group.AddTextfield("Threshold (percentage)", selectedValue.ToString(), sel =>
+            selectedValue = ModConfig.Instance.UpperThresholdSnowDumps;
+            group.AddTextfield("Upper Threshold (percentage)", selectedValue.ToString(), sel =>
             {
                 int.TryParse(sel, out result);
-                ModConfig.Instance.ThresholdSnowDumps = result;
+                ModConfig.Instance.UpperThresholdSnowDumps = result;
+                ModConfig.Instance.Save();
+            });
+
+            selected = ModConfig.Instance.StopEmptyingSnowDumps;
+            group.AddCheckbox("Stop Emptying Snow Dumps", selected, sel =>
+            {
+                ModConfig.Instance.StopEmptyingSnowDumps = sel;
+                ModConfig.Instance.Save();
+            });
+
+            selectedValue = ModConfig.Instance.LowerThresholdSnowDumps;
+            group.AddTextfield("Lower Threshold (percentage)", selectedValue.ToString(), sel =>
+            {
+                int.TryParse(sel, out result);
+                ModConfig.Instance.LowerThresholdSnowDumps = result;
                 ModConfig.Instance.Save();
             });
         }
