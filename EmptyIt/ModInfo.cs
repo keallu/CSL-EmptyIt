@@ -45,6 +45,41 @@ namespace EmptyIt
                 ModConfig.Instance.Save();
             });
 
+            if (SteamHelper.IsDLCOwned(SteamHelper.DLC.IndustryDLC))
+            {
+                group = helper.AddGroup("Warehouses");
+
+                selected = ModConfig.Instance.EmptyWarehouses;
+                group.AddCheckbox("Empty Warehouses", selected, sel =>
+                {
+                    ModConfig.Instance.EmptyWarehouses = sel;
+                    ModConfig.Instance.Save();
+                });
+
+                selectedValue = ModConfig.Instance.UpperThresholdWarehouses;
+                group.AddTextfield("Upper Threshold (percentage)", selectedValue.ToString(), sel =>
+                {
+                    int.TryParse(sel, out result);
+                    ModConfig.Instance.UpperThresholdWarehouses = result;
+                    ModConfig.Instance.Save();
+                });
+
+                selected = ModConfig.Instance.StopEmptyingWarehouses;
+                group.AddCheckbox("Stop Emptying Warehouses", selected, sel =>
+                {
+                    ModConfig.Instance.StopEmptyingWarehouses = sel;
+                    ModConfig.Instance.Save();
+                });
+
+                selectedValue = ModConfig.Instance.LowerThresholdWarehouses;
+                group.AddTextfield("Lower Threshold (percentage)", selectedValue.ToString(), sel =>
+                {
+                    int.TryParse(sel, out result);
+                    ModConfig.Instance.LowerThresholdWarehouses = result;
+                    ModConfig.Instance.Save();
+                });
+            }
+
             group = helper.AddGroup("Landfill Sites");
 
             selected = ModConfig.Instance.EmptyLandfillSites;
@@ -76,6 +111,41 @@ namespace EmptyIt
                 ModConfig.Instance.LowerThresholdLandfillSites = result;
                 ModConfig.Instance.Save();
             });
+
+            if (SteamHelper.IsDLCOwned(SteamHelper.DLC.UrbanDLC))
+            {
+                group = helper.AddGroup("Waste Transfer Facilities");
+
+                selected = ModConfig.Instance.EmptyWasteTransferFacilities;
+                group.AddCheckbox("Empty Waste Transfer Facilities", selected, sel =>
+                {
+                    ModConfig.Instance.EmptyWasteTransferFacilities = sel;
+                    ModConfig.Instance.Save();
+                });
+
+                selectedValue = ModConfig.Instance.UpperThresholdWasteTransferFacilities;
+                group.AddTextfield("Upper Threshold (percentage)", selectedValue.ToString(), sel =>
+                {
+                    int.TryParse(sel, out result);
+                    ModConfig.Instance.UpperThresholdWasteTransferFacilities = result;
+                    ModConfig.Instance.Save();
+                });
+
+                selected = ModConfig.Instance.StopEmptyingWasteTransferFacilities;
+                group.AddCheckbox("Stop Emptying Waste Transfer Facilities", selected, sel =>
+                {
+                    ModConfig.Instance.StopEmptyingWasteTransferFacilities = sel;
+                    ModConfig.Instance.Save();
+                });
+
+                selectedValue = ModConfig.Instance.LowerThresholdWasteTransferFacilities;
+                group.AddTextfield("Lower Threshold (percentage)", selectedValue.ToString(), sel =>
+                {
+                    int.TryParse(sel, out result);
+                    ModConfig.Instance.LowerThresholdWasteTransferFacilities = result;
+                    ModConfig.Instance.Save();
+                });
+            }
 
             group = helper.AddGroup("Cemeteries");
 
@@ -109,37 +179,40 @@ namespace EmptyIt
                 ModConfig.Instance.Save();
             });
 
-            group = helper.AddGroup("Snow Dumps");
-
-            selected = ModConfig.Instance.EmptySnowDumps;
-            group.AddCheckbox("Empty Snow Dumps", selected, sel =>
+            if (SteamHelper.IsDLCOwned(SteamHelper.DLC.SnowFallDLC))
             {
-                ModConfig.Instance.EmptySnowDumps = sel;
-                ModConfig.Instance.Save();
-            });
+                group = helper.AddGroup("Snow Dumps");
 
-            selectedValue = ModConfig.Instance.UpperThresholdSnowDumps;
-            group.AddTextfield("Upper Threshold (percentage)", selectedValue.ToString(), sel =>
-            {
-                int.TryParse(sel, out result);
-                ModConfig.Instance.UpperThresholdSnowDumps = result;
-                ModConfig.Instance.Save();
-            });
+                selected = ModConfig.Instance.EmptySnowDumps;
+                group.AddCheckbox("Empty Snow Dumps", selected, sel =>
+                {
+                    ModConfig.Instance.EmptySnowDumps = sel;
+                    ModConfig.Instance.Save();
+                });
 
-            selected = ModConfig.Instance.StopEmptyingSnowDumps;
-            group.AddCheckbox("Stop Emptying Snow Dumps", selected, sel =>
-            {
-                ModConfig.Instance.StopEmptyingSnowDumps = sel;
-                ModConfig.Instance.Save();
-            });
+                selectedValue = ModConfig.Instance.UpperThresholdSnowDumps;
+                group.AddTextfield("Upper Threshold (percentage)", selectedValue.ToString(), sel =>
+                {
+                    int.TryParse(sel, out result);
+                    ModConfig.Instance.UpperThresholdSnowDumps = result;
+                    ModConfig.Instance.Save();
+                });
 
-            selectedValue = ModConfig.Instance.LowerThresholdSnowDumps;
-            group.AddTextfield("Lower Threshold (percentage)", selectedValue.ToString(), sel =>
-            {
-                int.TryParse(sel, out result);
-                ModConfig.Instance.LowerThresholdSnowDumps = result;
-                ModConfig.Instance.Save();
-            });
+                selected = ModConfig.Instance.StopEmptyingSnowDumps;
+                group.AddCheckbox("Stop Emptying Snow Dumps", selected, sel =>
+                {
+                    ModConfig.Instance.StopEmptyingSnowDumps = sel;
+                    ModConfig.Instance.Save();
+                });
+
+                selectedValue = ModConfig.Instance.LowerThresholdSnowDumps;
+                group.AddTextfield("Lower Threshold (percentage)", selectedValue.ToString(), sel =>
+                {
+                    int.TryParse(sel, out result);
+                    ModConfig.Instance.LowerThresholdSnowDumps = result;
+                    ModConfig.Instance.Save();
+                });
+            }
         }
 
         private int GetSelectedOptionIndex(int[] option, int value)

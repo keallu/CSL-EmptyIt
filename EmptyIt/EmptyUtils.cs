@@ -30,7 +30,22 @@ namespace EmptyIt
             try
             {
                 BuildingManager buildingManager = Singleton<BuildingManager>.instance;
-                buildingManager.m_buildings.m_buffer[buildingId].Info.m_buildingAI.SetEmptying(buildingId, ref buildingManager.m_buildings.m_buffer[buildingId], emptying);
+
+                if (buildingManager.m_buildings.m_buffer[buildingId].Info.m_buildingAI is WarehouseAI)
+                {
+                    if (emptying)
+                    {
+                        buildingManager.m_buildings.m_buffer[buildingId].Info.m_buildingAI.SetEmptying(buildingId, ref buildingManager.m_buildings.m_buffer[buildingId], true);
+                    }
+                    else
+                    {
+                        buildingManager.m_buildings.m_buffer[buildingId].Info.m_buildingAI.SetFilling(buildingId, ref buildingManager.m_buildings.m_buffer[buildingId], true);
+                    }
+                }
+                else
+                {
+                    buildingManager.m_buildings.m_buffer[buildingId].Info.m_buildingAI.SetEmptying(buildingId, ref buildingManager.m_buildings.m_buffer[buildingId], emptying);
+                }
             }
             catch (Exception e)
             {

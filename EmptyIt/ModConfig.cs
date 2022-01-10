@@ -5,10 +5,18 @@
     {
         public bool ConfigUpdated { get; set; }
         public int Interval { get; set; } = 1;
+        public bool EmptyWarehouses { get; set; } = true;
+        public int UpperThresholdWarehouses { get; set; } = 75;
+        public bool StopEmptyingWarehouses { get; set; } = true;
+        public int LowerThresholdWarehouses { get; set; } = 25;
         public bool EmptyLandfillSites { get; set; } = true;
         public int UpperThresholdLandfillSites { get; set; } = 75;
         public bool StopEmptyingLandfillSites { get; set; } = true;
         public int LowerThresholdLandfillSites { get; set; } = 25;
+        public bool EmptyWasteTransferFacilities { get; set; } = true;
+        public int UpperThresholdWasteTransferFacilities { get; set; } = 75;
+        public bool StopEmptyingWasteTransferFacilities { get; set; } = true;
+        public int LowerThresholdWasteTransferFacilities { get; set; } = 25;
         public bool EmptyCemeteries { get; set; } = true;
         public int UpperThresholdCemeteries { get; set; } = 75;
         public bool StopEmptyingCemeteries { get; set; } = true;
