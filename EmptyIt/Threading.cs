@@ -117,90 +117,93 @@ namespace EmptyIt
                     {
                         _building = _buildingManager.m_buildings.m_buffer[i];
 
-                        _buildingAI = _building.Info.m_buildingAI;
-
-                        if (_buildingAI is WarehouseAI && _buildingAI.CanBeEmptied() && SteamHelper.IsDLCOwned(SteamHelper.DLC.IndustryDLC))
+                        if (_building.Info != null)
                         {
-                            amount = _building.m_customBuffer1;
-                            percentage = (float)amount / 10;
+                            _buildingAI = _building.Info.m_buildingAI;
 
-                            if (_modConfig.EmptyWarehouses && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdWarehouses)
+                            if (_buildingAI is WarehouseAI && _buildingAI.CanBeEmptied() && SteamHelper.IsDLCOwned(SteamHelper.DLC.IndustryDLC))
                             {
-                                _buildingIdsToEmpty.Add(i);
-                            }
+                                amount = _building.m_customBuffer1;
+                                percentage = (float)amount / 10;
 
-                            if (_modConfig.StopEmptyingWarehouses && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdWarehouses)
-                            {
-                                _buildingIdsToStopEmptying.Add(i);
-                            }
-                        }
-                        else if (_buildingAI is LandfillSiteAI && _buildingAI.CanBeEmptied())
-                        {
-                            _landfillSiteAI = _buildingAI as LandfillSiteAI;
-
-                            capacity = _landfillSiteAI.m_garbageCapacity;
-                            amount = Mathf.Min(capacity, _building.m_customBuffer1 * 1000 + _building.m_garbageBuffer);
-                            percentage = ((float)amount / (float)capacity) * 100;
-
-                            if (_building.Info.m_dlcRequired == SteamHelper.DLC_BitMask.UrbanDLC)
-                            {
-                                if (_modConfig.EmptyWasteTransferFacilities && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdWasteTransferFacilities)
+                                if (_modConfig.EmptyWarehouses && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdWarehouses)
                                 {
                                     _buildingIdsToEmpty.Add(i);
                                 }
 
-                                if (_modConfig.StopEmptyingWasteTransferFacilities && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdWasteTransferFacilities)
+                                if (_modConfig.StopEmptyingWarehouses && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdWarehouses)
                                 {
                                     _buildingIdsToStopEmptying.Add(i);
                                 }
                             }
-                            else
+                            else if (_buildingAI is LandfillSiteAI && _buildingAI.CanBeEmptied())
                             {
-                                if (_modConfig.EmptyLandfillSites && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdLandfillSites)
+                                _landfillSiteAI = _buildingAI as LandfillSiteAI;
+
+                                capacity = _landfillSiteAI.m_garbageCapacity;
+                                amount = Mathf.Min(capacity, _building.m_customBuffer1 * 1000 + _building.m_garbageBuffer);
+                                percentage = ((float)amount / (float)capacity) * 100;
+
+                                if (_building.Info.m_dlcRequired == SteamHelper.DLC_BitMask.UrbanDLC)
+                                {
+                                    if (_modConfig.EmptyWasteTransferFacilities && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdWasteTransferFacilities)
+                                    {
+                                        _buildingIdsToEmpty.Add(i);
+                                    }
+
+                                    if (_modConfig.StopEmptyingWasteTransferFacilities && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdWasteTransferFacilities)
+                                    {
+                                        _buildingIdsToStopEmptying.Add(i);
+                                    }
+                                }
+                                else
+                                {
+                                    if (_modConfig.EmptyLandfillSites && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdLandfillSites)
+                                    {
+                                        _buildingIdsToEmpty.Add(i);
+                                    }
+
+                                    if (_modConfig.StopEmptyingLandfillSites && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdLandfillSites)
+                                    {
+                                        _buildingIdsToStopEmptying.Add(i);
+                                    }
+                                }
+                            }
+                            else if (_buildingAI is CemeteryAI && _buildingAI.CanBeEmptied())
+                            {
+                                _cemeteryAI = _buildingAI as CemeteryAI;
+
+                                capacity = _cemeteryAI.m_graveCount;
+                                amount = _building.m_customBuffer1;
+                                percentage = ((float)amount / (float)capacity) * 100;
+
+                                if (_modConfig.EmptyCemeteries && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdCemeteries)
                                 {
                                     _buildingIdsToEmpty.Add(i);
                                 }
 
-                                if (_modConfig.StopEmptyingLandfillSites && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdLandfillSites)
+                                if (_modConfig.StopEmptyingCemeteries && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdCemeteries)
                                 {
                                     _buildingIdsToStopEmptying.Add(i);
                                 }
                             }
-                        }
-                        else if (_buildingAI is CemeteryAI && _buildingAI.CanBeEmptied())
-                        {
-                            _cemeteryAI = _buildingAI as CemeteryAI;
-
-                            capacity = _cemeteryAI.m_graveCount;
-                            amount = _building.m_customBuffer1;
-                            percentage = ((float)amount / (float)capacity) * 100;
-
-                            if (_modConfig.EmptyCemeteries && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdCemeteries)
+                            else if (_buildingAI is SnowDumpAI && _buildingAI.CanBeEmptied())
                             {
-                                _buildingIdsToEmpty.Add(i);
-                            }
+                                _snowDumpAI = _buildingAI as SnowDumpAI;
 
-                            if (_modConfig.StopEmptyingCemeteries && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdCemeteries)
-                            {
-                                _buildingIdsToStopEmptying.Add(i);
-                            }
-                        }
-                        else if (_buildingAI is SnowDumpAI && _buildingAI.CanBeEmptied())
-                        {
-                            _snowDumpAI = _buildingAI as SnowDumpAI;
+                                capacity = _snowDumpAI.m_snowCapacity;
+                                amount = Mathf.Min(capacity, _building.m_customBuffer1 * 1000 + _building.m_garbageBuffer);
+                                percentage = ((float)amount / (float)capacity) * 100;
 
-                            capacity = _snowDumpAI.m_snowCapacity;
-                            amount = Mathf.Min(capacity, _building.m_customBuffer1 * 1000 + _building.m_garbageBuffer);
-                            percentage = ((float)amount / (float)capacity) * 100;
+                                if (_modConfig.EmptySnowDumps && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdSnowDumps)
+                                {
+                                    _buildingIdsToEmpty.Add(i);
+                                }
 
-                            if (_modConfig.EmptySnowDumps && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdSnowDumps)
-                            {
-                                _buildingIdsToEmpty.Add(i);
-                            }
-
-                            if (_modConfig.StopEmptyingSnowDumps && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdSnowDumps)
-                            {
-                                _buildingIdsToStopEmptying.Add(i);
+                                if (_modConfig.StopEmptyingSnowDumps && ((_building.m_flags & Building.Flags.Downgrading) != Building.Flags.None) && percentage <= _modConfig.LowerThresholdSnowDumps)
+                                {
+                                    _buildingIdsToStopEmptying.Add(i);
+                                }
                             }
                         }
                     }
