@@ -144,7 +144,7 @@ namespace EmptyIt
                                 amount = Mathf.Min(capacity, _building.m_customBuffer1 * 1000 + _building.m_garbageBuffer);
                                 percentage = ((float)amount / (float)capacity) * 100;
 
-                                if (_building.Info.m_dlcRequired == SteamHelper.DLC_BitMask.UrbanDLC)
+                                if (_building.Info.m_requiredExpansion == SteamHelper.ExpansionBitMask.SunsetHarbor)
                                 {
                                     if (_modConfig.EmptyWasteTransferFacilities && ((_building.m_flags & Building.Flags.Downgrading) == Building.Flags.None) && percentage >= _modConfig.UpperThresholdWasteTransferFacilities)
                                     {
